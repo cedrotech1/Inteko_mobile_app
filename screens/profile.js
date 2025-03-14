@@ -43,40 +43,7 @@ const ProfilePage = ({ navigation, route }) => {
     loadUserData();
   }, []);
 
-  const handleSubmit = async () => {
-    if (!token) {
-      Alert.alert('Error', 'User is not authenticated.');
-      return;
-    }
-    setLoading(true);
 
-    try {
-      const response = await fetch(`${REACT_APP_BASE_URL}/api/v1/users/update/` + userId, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const res = await response.json();
-        Alert.alert('Success', res.message);
-        await AsyncStorage.setItem('user', JSON.stringify(formData));
-        setLoading(false);
-        navigation.goBack();
-      } else {
-        const errorData = await response.json();
-        Alert.alert('Error', errorData.message);
-        setLoading(false);
-      }
-    } catch (error) {
-      Alert.alert('Error', 'Failed to update user profile. Please try again later.');
-      setLoading(false);
-      console.error(error);
-    }
-  };
 
   const handlePasswordChange = async () => {
     if (!token) {
@@ -133,13 +100,14 @@ const ProfilePage = ({ navigation, route }) => {
         { text: 'OK', onPress: async () => {
             await AsyncStorage.clear();
             // navigation.navigate('Login');
+            onLogout();
         }},
       ],
       { cancelable: false }
     );
     await AsyncStorage.removeItem('token');
     await AsyncStorage.removeItem('user');
-    onLogout(); // Update login state
+  // Update login state
   };
 
   return (

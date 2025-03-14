@@ -37,7 +37,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="red" barStyle="light-content" />
+      <StatusBar backgroundColor="#0096FF" barStyle="light-content" />
       <Tab.Navigator>
         {isLoggedIn ? (
           <>
@@ -46,8 +46,9 @@ export default function App() {
               component={Notifications}
               options={{
                 tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="bell" color={color} size={size} />
+                  <MaterialCommunityIcons name="bell-outline" color={color} size={size} />
                 ),
+                headerShown: false, // Hide header for this screen
               }}
             />
             <Tab.Screen
@@ -55,8 +56,9 @@ export default function App() {
               component={Posts}
               options={{
                 tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="message" color={color} size={size} />
+                  <MaterialCommunityIcons name="post-outline" color={color} size={size} />
                 ),
+                headerShown: false, // Hide header for this screen
               }}
             />
             <Tab.Screen
@@ -64,9 +66,10 @@ export default function App() {
               component={Penarities}
               options={{
                 tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="account-star-outline" color={color} size={size} />
+                  <MaterialCommunityIcons name="cash-multiple" color={color} size={size} />
                 ),
-                tabBarLabel: 'Penarities',
+                tabBarLabel: 'Penalties',
+                headerShown: false, // Hide header for this screen
               }}
             />
             <Tab.Screen
@@ -75,31 +78,33 @@ export default function App() {
               initialParams={{ onLogout: handleLogout }}
               options={{
                 tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name="account" color={color} size={size} />
+                  <MaterialCommunityIcons name="account-circle-outline" color={color} size={size} />
                 ),
+                headerShown: false, // Hide header for this screen
               }}
             />
           </>
         ) : (
           <>
-          <Tab.Screen
-  name="Login"
-  component={Login}
-  initialParams={{ onLogin: handleLogin }} // Pass it as an initial param
-  options={{
-    tabBarIcon: ({ color, size }) => (
-      <Ionicons name="log-in" size={size} color={color} />
-    ),
-  }}
-/>
-
+            <Tab.Screen
+              name="Login"
+              component={Login}
+              initialParams={{ onLogin: handleLogin }}
+              options={{
+                tabBarIcon: ({ color, size }) => (
+                  <Ionicons name="log-in-outline" size={size} color={color} />
+                ),
+                headerShown: false, // Hide header for this screen
+              }}
+            />
             <Tab.Screen
               name="Signup"
               component={Signup}
               options={{
                 tabBarIcon: ({ color, size }) => (
-                  <Ionicons name="person-add" size={size} color={color} />
+                  <Ionicons name="person-add-outline" size={size} color={color} />
                 ),
+                headerShown: false, // Hide header for this screen
               }}
             />
           </>

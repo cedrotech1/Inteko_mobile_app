@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, Modal, TextInput, ActivityIndicator, Alert, StyleSheet } from "react-native";
+import { View, Text, Button, Modal, TextInput, ActivityIndicator, Alert, StyleSheet, ScrollView } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons"; // For icons
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { REACT_APP_BASE_URL } from '@env';
@@ -99,7 +99,7 @@ const FinesList = () => {
     <View style={styles.container}>
       <Text style={styles.header}>🚨 My Fines</Text>
 
-      <View style={styles.finesList}>
+      <ScrollView style={styles.finesList}>
         {penalties.map((penalty) => (
           <View key={penalty.id} style={styles.card}>
             <Text style={styles.title}>Penalty on post</Text>
@@ -124,7 +124,8 @@ const FinesList = () => {
                   Fine: {penalty.penarity} (un paid)
                 </Text>
                 <View style={styles.warning}>
-                  <MaterialCommunityIcons name="alert-triangle" size={20} color="orange" /> You must go to the village to report about this fine.
+                  <MaterialCommunityIcons name="alert-triangle" size={20} color="orange" />
+                  <Text>You must go to the village to report about this fine.</Text>
                 </View>
                 <Button
                   title="Pay Fine"
@@ -140,13 +141,14 @@ const FinesList = () => {
                   Fine {penalty.penarity} Paid!
                 </Text>
                 <View style={styles.successAlert}>
-                  <MaterialCommunityIcons name="check-circle" size={20} color="green" /> Congratulations! Your penalty has been resolved.
+                  <MaterialCommunityIcons name="check-circle" size={20} color="green" />
+                  <Text>Congratulations! Your penalty has been resolved.</Text>
                 </View>
               </>
             )}
           </View>
         ))}
-      </View>
+      </ScrollView>
 
       <Modal visible={showModal} animationType="slide" onRequestClose={() => setShowModal(false)}>
         <View style={styles.modalContent}>

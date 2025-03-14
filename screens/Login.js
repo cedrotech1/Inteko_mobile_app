@@ -12,7 +12,8 @@ const Login = ({ route  }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   console.log("User logged in!");
-  const { onLogin } = route.params || {};
+  const onLogin = route?.params?.onLogin;
+
 
 
   const isValidEmail = (email) => {
@@ -25,28 +26,35 @@ const Login = ({ route  }) => {
       setError('Please fill in both fields');
       return;
     }
-
+  
     if (!isValidEmail(email)) {
       setError('Please enter a valid email');
       return;
     }
-
+  
     setError('');
     setSuccessMessage('');
     setIsLoading(true);
-
+  
     try {
       const response = await axios.post(`${REACT_APP_BASE_URL}/api/v1/auth/login`, {
         email,
         password,
       });
-
+  
       if (response.data.success) {
+        const user = response.data.user;
+        
+        // Check if the user role is 'citizen'
+        if (user.role !== 'citizen') {
+          setError('You must be a citizen to log in.');
+          return;
+        }
+  
         await AsyncStorage.setItem('token', response.data.token);
-        await AsyncStorage.setItem('user', JSON.stringify(response.data.user));
-
-        setSuccessMessage('Login successful!');
-      
+        await AsyncStorage.setItem('user', JSON.stringify(user));
+  
+        // Proceed with the login process after successful role check
         onLogin();  // Redirect to another screen after successful login
       } else {
         setError(response.data.message || 'Login failed');
@@ -64,6 +72,7 @@ const Login = ({ route  }) => {
       setIsLoading(false);
     }
   };
+  
 
   return (
     <View style={styles.container}>

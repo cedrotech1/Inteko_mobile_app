@@ -264,7 +264,7 @@ const AddUser = () => {
           ))}
         </Picker>
         <Button title="Sign Up" onPress={handleSubmit} />
-        <Text style={styles.link} onPress={() => Alert.alert('Go to Login')}>Login</Text>
+        {/* <Text style={styles.link} onPress={() => Alert.alert('Go to Login')}>Login</Text> */}
       </View>
     </ScrollView>
   );
@@ -281,6 +281,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    color:'white',
+    backgroundColor:"#0096FF",
+    padding:'0.3cm'
   },
   formContainer: {
     backgroundColor: '#fff',
